@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    return [
+        'Laravel' => app()->version(),
+        'Front end' => env('FRONTEND_URL'),
+    ];
 });
 
 Route::post('/register', function(){
