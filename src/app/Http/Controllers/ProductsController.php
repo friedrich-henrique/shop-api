@@ -52,4 +52,14 @@ class ProductsController extends Controller
         ];
         return response($array, 200);
     }
+
+    public function checkout(Request $request)
+    {
+        $data = $request->all();
+        $array = [
+            'status' => 'success',
+            'message' => 'Pedido realizado com sucesso!'
+        ];
+        return response($array, 200);
+    }
 }
