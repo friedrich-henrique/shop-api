@@ -86,4 +86,25 @@ class ProductsController extends Controller
         
         
     }
+
+    public function support(Request $request){
+        try{
+            Log::info(env('MAIL_TO'));
+            Mail::to(env('MAIL_TO'))->send(new \App\Mail\SupportMail($request));
+            
+            $array = [
+                'status' => 'success',
+                'message' => 'Mensagem enviada com sucesso!'
+            ];
+            
+            return response($array, 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            $array = [
+                'status' => 'error',
+                'message' => 'Erro ao enviar a mensagem!'
+            ];
+            return response($array, 500);
+        }
+    }
 }
