@@ -43,8 +43,16 @@ class ProductsController extends Controller
                 'descrição' => 'Detector com painel digital, com alta precisão, ideal para atividades alimentícias ou que requerem a detecção de pequenas peças de metal.',
                 'image' => 'detector-alimenticio.jpg'
             ],
-            "martelo-mm15" =>[
+            "detector-raquete" =>[
                 'id'=> 5,
+                'nome'=> 'Detector Raquete',
+                'categoria' => 'detector de metais',
+                'preço' => 2500,
+                'descrição' => 'Detector portátil, usado na revista pessoal para segurança de estabelecimentos, como portarias, bancos, etc',
+                'image' => 'detector-raquete.jpg'
+            ],
+            "martelo-mm15" =>[
+                'id'=> 6,
                 'nome'=> 'Martelo MM15',
                 'categoria' => 'peças de reposição',
                 'preço' => 50,
@@ -57,13 +65,25 @@ class ProductsController extends Controller
 
     public function checkout(Request $request)
     {
-        Mail::to(env('MAIL_TO'))->send(new \App\Mail\QuotationMail($request));
+        try{
+            Mail::to(env('MAIL_TO'))->send(new \App\Mail\QuotationMail($request));
+            
+            $array = [
+                'status' => 'success',
+                'message' => 'Pedido realizado com sucesso!'
+            ];
+            
+            return response($array, 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            $array = [
+                'status' => 'error',
+                'message' => 'Erro ao realizar o pedido!'
+            ];
+            return response($array, 500);
+        }
         
-        $array = [
-            'status' => 'success',
-            'message' => 'Pedido realizado com sucesso!'
-        ];
         
-        return response($array, 200);
+        
     }
 }
