@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProductsController extends Controller
 {
@@ -55,11 +57,13 @@ class ProductsController extends Controller
 
     public function checkout(Request $request)
     {
-        $data = $request->all();
+        Mail::to(env('MAIL_TO'))->send(new \App\Mail\QuotationMail($request));
+        
         $array = [
             'status' => 'success',
             'message' => 'Pedido realizado com sucesso!'
         ];
+        
         return response($array, 200);
     }
 }
