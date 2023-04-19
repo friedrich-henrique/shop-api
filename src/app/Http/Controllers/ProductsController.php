@@ -67,7 +67,10 @@ class ProductsController extends Controller
     {
         try{
             Mail::to(env('MAIL_TO'))->send(new \App\Mail\QuotationMail($request));
-            Log::info('this is a log message');
+            Log::info('this is a log info');
+            Log::alert('this is a log alert');
+            Log::debug('this is a log debug');
+            Log::warning('this is a log warning');
             $array = [
                 'status' => 'success',
                 'message' => 'Pedido realizado com sucesso!'
