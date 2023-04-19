@@ -3,6 +3,7 @@
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
+use Monolog\Formatter\GoogleCloudLoggingFormatter;
 
 return [
 
@@ -93,7 +94,7 @@ return [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'formatter' => GoogleCloudLoggingFormatter::class,
             'with' => [
                 'stream' => 'php://stderr',
             ],

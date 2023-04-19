@@ -67,7 +67,7 @@ class ProductsController extends Controller
     {
         try{
             Mail::to(env('MAIL_TO'))->send(new \App\Mail\QuotationMail($request));
-            
+            Log::info('this is a log message');
             $array = [
                 'status' => 'success',
                 'message' => 'Pedido realizado com sucesso!'
@@ -78,8 +78,7 @@ class ProductsController extends Controller
             Log::error($e->getMessage());
             $array = [
                 'status' => 'error',
-                'message' => 'Erro ao realizar o pedido!',
-                'error_message'=> $e->getMessage()
+                'message' => 'Erro ao realizar o pedido!'
             ];
             return response($array, 500);
         }
@@ -88,7 +87,7 @@ class ProductsController extends Controller
     public function support(Request $request){
         try{
             Mail::to(env('MAIL_TO'))->send(new \App\Mail\SupportMail($request));
-            
+            Log::info('this is a log message');
             $array = [
                 'status' => 'success',
                 'message' => 'Mensagem enviada com sucesso!'
@@ -100,7 +99,6 @@ class ProductsController extends Controller
             $array = [
                 'status' => 'error',
                 'message' => 'Erro ao enviar a mensagem!',
-                'error_message'=> $e->getMessage()
             ];
             return response($array, 500);
         }
