@@ -78,18 +78,15 @@ class ProductsController extends Controller
             Log::error($e->getMessage());
             $array = [
                 'status' => 'error',
-                'message' => 'Erro ao realizar o pedido!'
+                'message' => 'Erro ao realizar o pedido!',
+                'error_message'=> $e->getMessage()
             ];
             return response($array, 500);
         }
-        
-        
-        
     }
 
     public function support(Request $request){
         try{
-            Log::info(env('MAIL_TO'));
             Mail::to(env('MAIL_TO'))->send(new \App\Mail\SupportMail($request));
             
             $array = [
@@ -102,7 +99,8 @@ class ProductsController extends Controller
             Log::error($e->getMessage());
             $array = [
                 'status' => 'error',
-                'message' => 'Erro ao enviar a mensagem!'
+                'message' => 'Erro ao enviar a mensagem!',
+                'error_message'=> $e->getMessage()
             ];
             return response($array, 500);
         }
